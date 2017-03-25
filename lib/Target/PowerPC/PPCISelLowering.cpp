@@ -895,6 +895,11 @@ PPCTargetLowering::PPCTargetLowering(const PPCTargetMachine &TM,
     }
   }
 
+  if (Subtarget.hasFXV()) {
+    addRegisterClass(MVT::v8i16, &PPC::FXVRRegClass);
+    addRegisterClass(MVT::v16i8, &PPC::FXVRRegClass);
+  }
+
   if (Subtarget.has64BitSupport())
     setOperationAction(ISD::PREFETCH, MVT::Other, Legal);
 

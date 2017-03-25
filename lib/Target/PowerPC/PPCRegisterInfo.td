@@ -48,6 +48,11 @@ class FPR<bits<5> num, string n> : PPCReg<n> {
   let HWEncoding{4-0} = num;
 }
 
+// FXV - One of the 32 128-bit fixed-point vector registers
+class FXV<bits<5> num, string n> : PPCReg<n> {
+  let HWEncoding{4-0} = num;
+}
+
 // QFPR - One of the 32 256-bit floating-point vector registers (used for QPX)
 class QFPR<FPR SubReg, string n> : PPCReg<n> {
   let HWEncoding = SubReg.HWEncoding;
@@ -112,6 +117,10 @@ foreach Index = 0-31 in {
 foreach Index = 0-31 in {
   def VF#Index : VF<Index, "v" #Index>,
                  DwarfRegNum<[!add(Index, 77), !add(Index, 77)]>;
+}
+
+foreach Index = 0-31 in {
+  def FXV#Index : FXV<Index, "fxv" #Index>;
 }
 
 // QPX Floating-point registers
@@ -317,6 +326,8 @@ def QBRC : RegisterClass<"PPC", [v4i1], 256, (add QFRC)> {
   // number is true and anything else (including NaN) is false.
   let Size = 256;
 }
+
+def FXVR : RegisterClass<"PPC", [v16i8, v8i16], 128, (add FXV0, FXV1, FXV2, FXV2, FXV3, FXV4, FXV5, FXV6, FXV7, FXV8, FXV9, FXV10, FXV11, FXV12, FXV13, FXV14, FXV15, FXV16, FXV17, FXV18, FXV19, FXV20, FXV21, FXV22, FXV23, FXV24, FXV25, FXV26, FXV27, FXV28, FXV29, FXV30, FXV31)>;
 
 def CRBITRC : RegisterClass<"PPC", [i1], 32,
   (add CR2LT, CR2GT, CR2EQ, CR2UN,

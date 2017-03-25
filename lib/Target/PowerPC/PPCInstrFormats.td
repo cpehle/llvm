@@ -1996,3 +1996,23 @@ class Pseudo<dag OOL, dag IOL, string asmstr, list<dag> pattern>
   let Pattern = pattern;
   let Inst{31-0} = 0;
 }
+
+//-- FXV-Form
+class FXVForm<bits<9> xo, dag OOL, dag IOL, string asmstr,
+               InstrItinClass itin, list<dag> pattern>
+    : I<4, OOL, IOL, asmstr, itin> {
+  bits<5> VD;
+  bits<5> VA;
+  bits<5> VB;
+
+  // TODO(Christian): masked operations have a bug right now
+  // bit<2>  RC;
+  
+  let Pattern = pattern;
+  
+  let Inst{6-10}  = VD;
+  let Inst{11-15} = VA;
+  let Inst{16-20} = VB;
+  let Inst{21-29} = xo;
+  let Inst{30-31} = 0;
+}

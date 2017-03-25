@@ -93,6 +93,7 @@ def FeatureSTFIWX    : SubtargetFeature<"stfiwx","HasSTFIWX", "true",
 def FeatureLFIWAX    : SubtargetFeature<"lfiwax","HasLFIWAX", "true",
                                         "Enable the lfiwax instruction",
                                         [FeatureHardFloat]>;
+def FeatureFXV       : SubtargetFeature<"fxv", "HasFXV", "true", "Enable FXV instructions">;
 def FeatureFPRND     : SubtargetFeature<"fprnd", "HasFPRND", "true",
                                         "Enable the fri[mnpz] instructions",
                                         [FeatureHardFloat]>;
@@ -422,6 +423,7 @@ def : Processor<"ppc", G3Itineraries, [Directive32, FeatureHardFloat,
                                        FeatureMFTB]>;
 def : Processor<"ppc32", G3Itineraries, [Directive32, FeatureHardFloat,
                                          FeatureMFTB]>;
+
 def : ProcessorModel<"ppc64", G5Model,
                   [Directive64, FeatureAltivec,
                    FeatureMFOCRF, FeatureFSqrt, FeatureFRES,
@@ -429,6 +431,7 @@ def : ProcessorModel<"ppc64", G5Model,
                    Feature64Bit /*, Feature64BitRegs */,
                    FeatureMFTB]>;
 def : ProcessorModel<"ppc64le", P8Model, ProcessorFeatures.Power8FeatureList>;
+def : Processor<"nux", G3Itineraries, [Directive32, FeatureFXV]>;
 
 //===----------------------------------------------------------------------===//
 // Calling Conventions

@@ -1133,3 +1133,87 @@ def int_ppc_tsuspend : GCCBuiltin<"__builtin_tsuspend">,
 def int_ppc_ttest : GCCBuiltin<"__builtin_ttest">,
       Intrinsic<[llvm_i64_ty], [], []>;
 }
+
+//===----------------------------------------------------------------------===//
+// PowerPC FXV Intrinsic Class Definitions.
+//
+
+
+class PowerPC_FXV_Intrinsic<string GCCIntSuffix, list<LLVMType> ret_types,
+                              list<LLVMType> param_types,
+                              list<IntrinsicProperty> properties>
+    : GCCBuiltin<!strconcat("__builtin_fxv_", GCCIntSuffix)>,
+      Intrinsic<ret_types, param_types, properties>;
+
+let TargetPrefix = "ppc" in {
+
+// Note(Christian): We don't expose the conditional yet
+// TODO(Christian): Investigate how to add the conditional field
+// TODO(Christian): Define an intrinsic class for the three operant case
+// TODO(Christian): Work out how to track dependency on condition register
+// TODO(Christian): Work out how to track dependency on the accumulate register
+
+def int_ppc_fxv_splath : PowerPC_FXV_Intrinsic<"splath", [llvm_v8i16_ty], [llvm_i16_ty], []>;
+def int_ppc_fxv_splatb : PowerPC_FXV_Intrinsic<"splatb", [llvm_v16i8_ty], [llvm_i8_ty], []>;
+
+def int_ppc_fxv_mahm : PowerPC_FXV_Intrinsic<"mahm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_matachm : PowerPC_FXV_Intrinsic<"matachm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_mulhm : PowerPC_FXV_Intrinsic<"mulhm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_multachm : PowerPC_FXV_Intrinsic<"multachm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_subhm : PowerPC_FXV_Intrinsic<"subhm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_addactachm : PowerPC_FXV_Intrinsic<"addactachm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_addtachm : PowerPC_FXV_Intrinsic<"addtachm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_addachm : PowerPC_FXV_Intrinsic<"addachm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_addhm : PowerPC_FXV_Intrinsic<"addhm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_cmphm : PowerPC_FXV_Intrinsic<"cmphm", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_mtach : PowerPC_FXV_Intrinsic<"mtach", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+
+def int_ppc_fxv_mabm : PowerPC_FXV_Intrinsic<"mabm", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_matacbm : PowerPC_FXV_Intrinsic<"matacbm", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_mulbm : PowerPC_FXV_Intrinsic<"mulbm", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_multacbm : PowerPC_FXV_Intrinsic<"multacbm", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_subbm : PowerPC_FXV_Intrinsic<"subbm", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_addactacb : PowerPC_FXV_Intrinsic<"addactacb", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_addtacb : PowerPC_FXV_Intrinsic<"addtacb", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_addacbm : PowerPC_FXV_Intrinsic<"addacbm", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_addbm : PowerPC_FXV_Intrinsic<"addbm", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+
+def int_ppc_fxv_cmpb : PowerPC_FXV_Intrinsic<"cmpb", [], [llvm_v16i8_ty], []>;
+
+def int_ppc_fxv_mtacb : PowerPC_FXV_Intrinsic<"mtacb", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+
+def int_ppc_fxv_mahfs : PowerPC_FXV_Intrinsic<"mahfs", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_mtachf : PowerPC_FXV_Intrinsic<"mtachf", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_matachfs : PowerPC_FXV_Intrinsic<"matachfs", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_mulhfs : PowerPC_FXV_Intrinsic<"mulhfs", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_multachfs : PowerPC_FXV_Intrinsic<"multachfs", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_subhfs : PowerPC_FXV_Intrinsic<"subhfs", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_addactachf : PowerPC_FXV_Intrinsic<"addactachf", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_addachfs : PowerPC_FXV_Intrinsic<"addachfs", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_addhfs : PowerPC_FXV_Intrinsic<"addhfs", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+
+def int_ppc_fxv_mabfs : PowerPC_FXV_Intrinsic<"mabfs", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_mtacbf : PowerPC_FXV_Intrinsic<"mtacbf", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_matacbfs : PowerPC_FXV_Intrinsic<"matacbfs", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_mulbfs : PowerPC_FXV_Intrinsic<"mulbfs", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_multacbfs : PowerPC_FXV_Intrinsic<"multacbfs", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_subbfs : PowerPC_FXV_Intrinsic<"subbfs", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_addactacbf : PowerPC_FXV_Intrinsic<"addactacbf", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_addacbfs : PowerPC_FXV_Intrinsic<"addacbfs", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_addbfs : PowerPC_FXV_Intrinsic<"addbfs", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+
+def int_ppc_fxv_vsel : PowerPC_FXV_Intrinsic<"vsel", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_shh : PowerPC_FXV_Intrinsic<"shh", [llvm_v8i16_ty], [llvm_v8i16_ty, llvm_v8i16_ty], []>;
+def int_ppc_fxv_shb : PowerPC_FXV_Intrinsic<"shb", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_pckbu : PowerPC_FXV_Intrinsic<"pckbu", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_pckbl : PowerPC_FXV_Intrinsic<"pckbl", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_upckbl : PowerPC_FXV_Intrinsic<"upckbl", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+def int_ppc_fxv_upckbr : PowerPC_FXV_Intrinsic<"upckbr", [llvm_v16i8_ty], [llvm_v16i8_ty, llvm_v16i8_ty], []>;
+
+// 5.2.8 Load/Store instructions
+def int_ppc_fxv_lax : PowerPC_FXV_Intrinsic<"lax", [llvm_v16i8_ty], [llvm_ptr_ty], [IntrReadMem, IntrArgMemOnly]>;
+def int_ppc_fxv_stax : PowerPC_FXV_Intrinsic<"stax", [], [llvm_v16i8_ty, llvm_ptr_ty], [IntrWriteMem, IntrArgMemOnly]>; 
+def int_ppc_fxv_inx : PowerPC_FXV_Intrinsic<"inx", [llvm_v16i8_ty], [llvm_ptr_ty], [IntrReadMem, IntrArgMemOnly]>;
+def int_ppc_fxv_outx : PowerPC_FXV_Intrinsic<"outx", [], [llvm_v16i8_ty, llvm_ptr_ty], [IntrWriteMem, IntrArgMemOnly]>;
+
+}
